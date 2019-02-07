@@ -32,4 +32,14 @@ class StoreController extends AbstractController
             'controller_name' => 'StoreController',
         ]);
     }
+
+    /**
+     * @Route("/panier", name="panier")
+     */
+    public function panier()
+    {
+        return $this->render('store/panier.html.twig', [
+            'controller_name' => 'StoreController',
+        ]);
+    }
 }

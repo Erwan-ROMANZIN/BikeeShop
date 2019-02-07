@@ -18,4 +18,14 @@ class CmsController extends AbstractController
             'controller_name' => 'CmsController',
         ]);
     }
+
+    /**
+     * @Route("/commande", name="commande")
+     */
+    public function commande()
+    {
+        return $this->render('cms/commande.html.twig', [
+            'controller_name' => 'CmsController',
+        ]);
+    }
 }
