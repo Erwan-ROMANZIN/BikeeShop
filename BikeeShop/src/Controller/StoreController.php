@@ -4,42 +4,43 @@ namespace App\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-/**
- * @Route("/store", name="store_")
- */
+use Symfony\Component\Serializer\SerializerInterface;
+use App\Entity\Product;
+
 class StoreController extends AbstractController
 {
+    
     /**
-     * @Route("/product/{id}/details/{slug}", name="product-detail", requirements={"id" = "\d+"})
+     * @Route("/products", name="products", methods={"GET"})
+     * @return JsonResponse
      */
-    public function store(int $id, String $slug)
+    public function list(SerializerInterface $serializer)
     {
+        $repository = $this->getDoctrine()->getRepository(Product::class);
+       $data = $repository->findAll();
+       $d = $serializer->serialize($data, 'json');
 
-        return $this->render('store/product-detail.html.twig', [
-            'controller_name' => 'StoreController',
-            'id'=> $id,
-            'slug'=> $slug,
-        ]);
+        return new Response($d);
     }
 
     /**
-     * @Route("/product/list", name="product-list")
+     * @Route("/product/{id}", name="product", methods={"GET"})
+     * @return JsonResponse
      */
-    public function list()
+    public function detail(SerializerInterface $serializer)
     {
-        return $this->render('store/product-list.html.twig', [
-            'controller_name' => 'StoreController',
-        ]);
+       
     }
 
     /**
-     * @Route("/panier", name="panier")
+     * @Route("/panier", name="panier", methods={"GET"})
+     * @return JsonResponse
      */
-    public function panier()
+    public function panier(SerializerInterface $serializer)
     {
-        return $this->render('store/panier.html.twig', [
-            'controller_name' => 'StoreController',
-        ]);
+       
     }
 }
